@@ -1,0 +1,15 @@
+{
+  "name": "build",
+  "version": "1.0.0",
+  "description": "This repository contains a set of examples for Zappar for A-Frame. For more information, check out the package page for [Zappar for A-Frame](https://www.npmjs.com/package/@zappar/zappar-aframe) (@zappar/zappar-aframe).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gh-pages": "^3.1.0"
+  }
+}

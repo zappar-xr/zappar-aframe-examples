@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.2.4/zappar-aframe.js"></script>
+
+    <meta charset="utf-8" />
+    <title>Zappar for A-Frame: Instant Tracking 3D Model Example</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #zappar-placement-ui {
+            position: absolute;
+            bottom: 30px;
+            width: 200px;
+            left: calc(50% - 100px);
+
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            font-family: sans-serif;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <a-scene>
+        <a-camera zappar-camera />
+
+        <!-- Setup our instant tracker and start it in placement mode so the user can -->
+        <!-- choose a location for the object -->
+        <a-entity zappar-instant="placement-mode: true" id="instant-tracker">
+
+            <!-- Include a 3D model inside our instant tracker -->
+            <a-entity gltf-model="url(assets/waving.glb)"></a-entity>
+
+        </a-entity>
+    </a-scene>
+
+    <!-- Some UI for the user to tap to indicate they're happy with the placement -->
+    <div id="zappar-placement-ui">Tap here to place the object</div>
+
+    <script>
+        // Listen for when the user taps the UI
+        const placementUI = document.getElementById("zappar-placement-ui");
+        placementUI.addEventListener("click", function() {
+            // Set placement mode to false on our instant tracker
+            const instantTracker = document.getElementById("instant-tracker");
+            instantTracker.setAttribute("zappar-instant", "placement-mode: false");
+            // And remove the placement UI
+            placementUI.remove();
+        });
+    </script>
+</body>
+
+</html>
