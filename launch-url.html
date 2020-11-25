@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
-    <script src="https://libs.zappar.com/zappar-aframe/0.2.4/zappar-aframe.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.2.6/zappar-aframe.js"></script>
 
     <meta charset="utf-8" />
     <title>Zappar for A-Frame: Launch URL Example</title>
@@ -41,10 +41,15 @@
 <body>
 
     <a-scene>
+        <!-- Ask user for camera permissions, display some text if permission is denied -->
+        <a-entity zappar-permissions-ui id="permissions"></a-entity>
+        <!-- shows a full-page dialog that informs the user they're using an unsupported browser -->
+        <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
+
         <a-camera zappar-camera></a-camera>
 
         <!-- Our image tracking group -->
-        <a-entity zappar-image="assets/example-tracking-image.zpt">
+        <a-entity zappar-image="target: assets/example-tracking-image.zpt">
 
             <!-- This group will be set visible when the image is in view -->
             <a-entity visibility-changer visible="false">
