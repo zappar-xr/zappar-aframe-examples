@@ -4,11 +4,11 @@ This repository contains a set of examples for Zappar for A-Frame. For more info
 
 ## Prerequisites
 
-To get started you'll want to print out the example target image, `example-tracking-image.png`.
+To get started you'll want to print out the example target images, `example-tracking-image.png` and `BusinessCard.png`.
 
 ## Trying the Examples
 
-Due to browser restrictions surrounding use of the camera, you must use HTTPS to access the HTML files, even if doing so locally from your computer. You can use the [ZapWorks command-line tool](https://www.npmjs.com/package/@zappar/zapworks-cli) to serve a folder over HTTPS for access on your local computer, like this:
+Due to browser restrictions surrounding use of the camera, you must use HTTPS to access the HTML files, even if doing so locally from your computer. You can use the [ZapWorks command-line tool](https://www.npmjs.com/package/@zappar/zapworks-cli) to serve a folder over HTTPS for access on your local computer, like this: 
 ```
 zapworks serve .
 ```
