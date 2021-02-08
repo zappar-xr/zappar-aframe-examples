@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+  <script src="https://libs.zappar.com/zappar-aframe/0.3.6/zappar-aframe.js"></script>
+
+  <!-- We need A-Frame Extras to run animations -->
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+
+
+  <meta charset="utf-8" />
+  <title>Zappar for A-Frame: Play Animation From Gaze Example</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+  <script>
+      
+        // Only show our content when the image becomes visible
+        AFRAME.registerComponent("visibility-changer", {
+            init: function () {
+                this.el.setAttribute("visible", false)
+                this.el.sceneEl.addEventListener('zappar-visible', () => this.el.setAttribute("visible", true));
+            }
+        })
+
+        // Register a component that will register an event listener for when our raycaster detects an object
+        AFRAME.registerComponent('collider-check', {
+            dependencies: ['raycaster'],
+            init: function () {
+                this.el.addEventListener('raycaster-intersection', function () {
+                    // When the object is detected, play the animation
+                    const model = document.getElementById('model');
+                    model.setAttribute("animation-mixer", "clip:null")
+                    model.setAttribute("animation-mixer", "clip: Armature|mixamo.com|Layer0; repetitions : 1");
+                });
+            }
+        });
+  </script>
+</head>
+
+<body>
+
+  <body>
+    <a-scene>
+        <!-- Ask user for camera permissions, display some text if permission is denied -->
+        <a-entity zappar-permissions-ui id="permissions"></a-entity>
+        <!-- shows a full-page dialog that informs the user they're using an unsupported browser -->
+        <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
+
+      <a-camera zappar-camera>
+        <!-- Inside our camera, include a raycaster that looks down the center of the camera -->
+        <!-- Use our 'collider-check' component to register the event handler -->
+        <a-entity collider-check raycaster="objects: .collidable"></a-entity>
+      </a-camera>
+
+      <a-entity zappar-image="target: assets/example-tracking-image.zpt">
+
+        <!-- Have a group that will only become visible when the target image comes into view-->
+        <a-entity visibility-changer>
+
+          <!-- Have a hotspot plane that can be detected by the raycaster -->
+          <a-plane class="collidable" color="#000000" material="transparent: true; opacity: 0.8;" width="1" height="1" position="0 0 -0.01 "></a-plane>
+
+          <!-- Include our 3D model-->
+          <a-entity rotation="90 0 0" id="model" gltf-model="url(assets/waving.glb)" animation-mixer="clip: null"></a-entity>
+
+        </a-entity>
+
+      </a-entity>
+
+
+    </a-scene>
+  </body>
+
+</body>
+
+</html>

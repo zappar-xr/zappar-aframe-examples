@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.3.6/zappar-aframe.js"></script>
+
+    <meta charset="utf-8" />
+    <title>Solar System Model using Zappar for A-Frame</title>
+    <!-- INLINE STYLES -->
+    <style>
+        /* GOOGLE FONT */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* UI ELEMENTS */
+        .btn {
+            position: absolute;
+            background-color: rgba(52, 75, 96, 0.8);
+            color: white;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #zappar-placement-ui:active, #zappar-replacement-ui:active {
+            border-bottom: 2px solid #fff;
+        }
+        #zappar-placement-ui {
+            width: 200px;
+            left: calc(50% - 100px);
+            bottom: 30px;
+        }
+        #zappar-replacement-ui {
+            width: 50px;
+            right: 10px;
+            bottom: 10px;
+        }
+        #moveIcon {
+            width: 50px;
+            height: 50px;
+        }
+        #bgMusic {
+            top: 10px;
+            left: 10px;
+        }
+        /* VISIBILITY */
+        .visible {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity .2s linear;
+        }
+        .hidden {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 2s, opacity .2s linear;
+        }
+    </style>
+</head>
+<body>
+    <!-- SCENE START -->
+    <a-scene loading-screen="backgroundColor: #344b60">
+
+        <!-- Ask user for camera permissions, display some text if permission is denied -->
+        <a-entity zappar-permissions-ui id="permissions"></a-entity>
+        <!-- shows a full-page dialog that informs the user they're using an unsupported browser -->
+        <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
+        
+        <!-- ASSET LIBRARY (PLANET TEXTURES FROM SHADERELIEF http://www.shadedrelief.com/natural3/index.html & SOLARSYSTEMSCOPE https://www.solarsystemscope.com/textures/) -->
+        <a-assets>
+            <!-- ALL PLANET TEXTURES -->
+            <img id="sunTexture" src="assets/planets/Sun/Sun_Texture.jpg" />
+            <img id="mercuryTexture" src="assets/planets/Mercury/Mercury_texture.jpg" />
+            <img id="venusTexture" src="assets/planets/Venus/Venus_Texture.jpg" />
+            <img id="earthTexture" src="assets/planets/Earth/Earth_Texture.jpg" />
+            <img id="marsTexture" src="assets/planets/Mars/Mars_Texture.jpg" />
+            <img id="jupiterTexture" src="assets/planets/Jupiter/Jupiter_Texture.jpg" />
+            <img id="saturnTexture" src="assets/planets/Saturn/Saturn_Texture.jpg" />
+            <img id="saturnRing" src="assets/planets/Saturn/Saturn_Ring.png" />
+            <img id="uranusTexture" src="assets/planets/Uranus/Uranus_Texture.jpg" />
+            <img id="neptuneTexture" src="assets/planets/Neptune/Neptune_Texture.jpg" />
+            
+            <!-- PLATFORM TEXTURE -->
+            <img id="baseTexture" src="assets/Universe-Platform.png" />
+        </a-assets>
+        <!-- END ASSET LIBRARY -->
+
+        <!-- MIXINS -->
+        <!-- ROTATE THE PLANETS -->
+        <a-mixin id="rotate" animation="property: rotation; loop: true; from: 0 0 0; to: 0 360 0; dur: 20000; easing: linear;"></a-mixin>
+        <!-- MAKE THE PLANETS ORBIT -->
+        <a-mixin id="orbit" animation="property: rotation; loop: true; to: 0 360 0; dur: 14000; easing: linear;"></a-mixin>
+
+        <!-- CREATE AN A-FRAME CAMERA AND REPLACE IT WITH ZAPPAR'S CAMERA -->
+        <a-camera zappar-camera></a-camera>
+        
+        <!-- AMBIENT LIGHTING -->
+        <a-entity light="type: ambient; color: #CCC"></a-entity>
+        
+        <!-- CREATE AN INSTANT TRACKING EXPERIENCE -->
+        <a-entity zappar-instant="placement-mode: true" id="instant-group">
+            <!-- PLACE 3D OBJECTS TRACK FROM THE INSTANT ANCHOR -->
+            <!-- SUN -->
+            <a-entity id="sun">
+                <a-sphere position="0 0.5 0" radius="0.9" material="src: #sunTexture; emissive: #ffaf46; emissiveIntensity: .5" light="type: point; color: #ffaf46; intensity: 1.5" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- MERCURY -->
+            <a-entity id="mercury" mixin="orbit" animation="dur: 2000;">
+                <a-sphere position="0 0.5 1.2" radius="0.1" material="src: #mercuryTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- VENUS -->
+            <a-entity id="venus" mixin="orbit" animation="dur: 4000;">
+                <a-sphere position="0 0.5 1.7" radius="0.2" material="src: #venusTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- EARTH -->
+            <a-entity id="earth" mixin="orbit" animation="dur: 6000;">
+                <a-sphere position="0 0.5 2.2" radius="0.2" material="src: #earthTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- MARS -->
+            <a-entity id="mars" mixin="orbit" animation="dur: 8000;">
+                <a-sphere position="0 0.5 2.7" radius="0.1" material="src: #marsTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- JUPITER -->
+            <a-entity id="jupiter" mixin="orbit" animation="dur: 10000;">
+                <a-sphere position="0 0.5 3.5" radius="0.4" material="src: #jupiterTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- SATURN -->
+            <a-entity id="saturn" mixin="orbit" animation="dur: 11000;">
+                <a-sphere position="0 0.5 4" radius="0.35" material="src: #saturnTexture;" mixin="rotate">
+                    <a-ring src="#saturnRing" rotation="70 0 0" radius-inner="0.5" radius-outer="1" opacity=".8"></a-ring>
+                </a-sphere>
+            </a-entity>
+
+            <!-- URANUS -->
+            <a-entity id="uranus" mixin="orbit" animation="dur: 12000;">
+                <a-sphere position="0 0.5 5" radius="0.3" material="src: #uranusTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- NEPTUNE -->
+            <a-entity id="neptune" mixin="orbit">
+                <a-sphere position="0 0.5 5.5" radius="0.3" material="src: #neptuneTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- BASE -->
+            <a-plane material="src: #baseTexture; side: double" position="0 -0.5 0" scale="5 5 5" rotation="-85 0 0" opacity="0.8"></a-plane>
+ 
+        </a-entity>
+        <!-- END INSTANT TRACKING EXPERIENCE -->
+
+    </a-scene>
+    <!-- SCENE END -->
+
+    <!-- PLACEMENT BUTTON -->
+    <div id="zappar-placement-ui" class="btn visible">Tap here to place model</div>
+
+     <!-- RESET BUTTON -->
+    <div id="zappar-replacement-ui" class="btn hidden"><img id="moveIcon" src="assets/MoveIcon.png" /></div>
+
+    <script>
+        // WHEN THE EXPERIENCE LOADS WE START WITH A SETUP FUNCTION
+    window.addEventListener("load", setup);
+
+    function setup() {
+        // WHEN THE USER TAPS ON THE PLACEMENT UI
+        var placementUI = document.getElementById("zappar-placement-ui");
+
+        // REPLACEMENT UI
+        var replacementUI = document.getElementById("zappar-replacement-ui");
+
+        // INSTANT TRACKING GROUP
+        const instantGroup = document.getElementById("instant-group");
+
+        // SOUNDS
+        // BUTTON SOUNDS - ZAPSPLAT STANDARD LICENSE https://www.zapsplat.com/license-type/standard-license/
+        var buttonClick = new Audio('assets/button_click.mp3');
+        buttonClick.volume = 0.2;
+
+        // FIRES WHEN PLACEMENT UI HEARS A CLICK EVENT ON IT
+        placementUI.addEventListener("click", function() {
+            // SET THE PLACEMENT-MODE TO FALSE ON INSTANT TRACKER GROUP
+            instantGroup.setAttribute("zappar-instant", "placement-mode: false");
+
+            // PLAY THE SOUND AND REMOVE THE PLACEMENT UI
+            buttonClick.play();
+            placementUI.classList.remove("visible");
+            placementUI.classList.add("hidden");
+            replacementUI.classList.remove("hidden");
+            replacementUI.classList.add("visible");
+        })
+
+        // FIRES WHEN REPLACEMENT UI HEARS A CLICK EVENT ON IT
+        replacementUI.addEventListener("click", function() {
+            // SET THE PLACEMENT-MODE TO TRUE ON THE INSTANT TRACKER GROUP
+            instantGroup.setAttribute("zappar-instant", "placement-mode: true");
+
+            // PLAY THE SOUND AND REMOVE THE REPLACEMENT UI
+            buttonClick.play();
+            replacementUI.classList.remove("visible");
+            replacementUI.classList.add("hidden");
+            placementUI.classList.remove("hidden");
+            placementUI.classList.add("visible");
+        })
+        
+    }
+    </script>
+
+</body>
+</html>

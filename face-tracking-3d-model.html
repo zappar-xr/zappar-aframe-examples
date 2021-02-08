@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.3.6/zappar-aframe.js"></script>
+
+    <meta charset="utf-8" />
+    <title>Zappar for A-Frame: Face Tracking 3D Model Example</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <a-scene>
+        <!-- Ask user for camera permissions, display some text if permission is denied -->
+        <a-entity zappar-permissions-ui id="permissions"></a-entity>
+        <!-- shows a full-page dialog that informs the user they're using an unsupported browser -->
+        <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
+        
+        <a-camera zappar-camera="user-facing: true;" />
+
+        <!-- Setup our face tracker -->
+        <a-entity zappar-face id="my-face-tracker">
+
+            <!-- Include a head mask object that will make sure the user's head appears in the center of our helmet -->
+            <a-entity zappar-head-mask="face:#my-face-tracker;"></a-entity>
+
+            <!-- Include a 3D model inside our face tracker -->
+            <a-entity gltf-model="url(assets/z_helmet.glb)" position="0.3 -1.3 0" scale="1.1 1.1 1.1"></a-entity>
+
+        </a-entity>
+    </a-scene>
+</body>
+
+</html>

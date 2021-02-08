@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.3.6/zappar-aframe.js"></script>
+
+    <meta charset="utf-8" />
+    <title>A-Frame Business Card Example</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <script>
+        // Only show our content when the image becomes visible
+        AFRAME.registerComponent("visibility-changer", {
+            init: function () {
+                this.el.setAttribute("visible", false)
+                this.el.sceneEl.addEventListener('zappar-visible', () => this.el.setAttribute("visible", true));
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <!-- START OUR A-FRAME SCENE -->
+    <a-scene loading-screen="backgroundColor: #344A60">
+         <!-- Ask user for camera permissions, display some text if permission is denied -->
+         <a-entity zappar-permissions-ui id="permissions"></a-entity>
+         <!-- shows a full-page dialog that informs the user they're using an unsupported browser -->
+         <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
+
+        <!-- PRE-LOAD OUR ASSETS FOR PERFORMANCE -->
+        <a-assets>
+            <!-- PLANE BACKGROUND -->
+            <img id="card-plain" src="assets/BusinessCardPlain.png" />
+
+            <!-- MENU ITEMS -->
+            <img id="web-icon" src="assets/WebLaunch.png"/>
+            <img id="facebook-icon" src="assets/Facebook.png"/>
+            <img id="phone-icon" src="assets/Phone.png"/>
+            <!-- MENU ITEM MIXIN -->
+            <a-mixin id="iconProperties" scale="0.4 0.4 0.4" material="alpha-test:0.5" animation="property: scale; to: 0.5 0.5 0.5; dir: alternate; dur: 2000; loop:true;"></a-mixin>
+        </a-assets>
+        <!-- END ASSET PRE-LOADING -->
+
+        <!-- CREATE A-FRAME CAMERA AND REPLACE IT WITH ZAPPAR'S CAMERA -->
+        <!-- ALLOW USER TO CLICK ON ELEMENTS BY ADDING CURSOR COMPONENT & IDENTIFY RAYCASTER OBJECTS FOR BETTER PERFORMANCE -->
+        <a-camera zappar-camera cursor="rayOrigin: mouse; fuse: false;" raycaster="objects: .collidable"></a-camera>
+        
+        <!-- SET UP OUR EXPERIENCE AS IMAGE TRACKING & GIVE IT AN IMAGE TO TRACK -->
+        <a-entity zappar-image="target: assets/BusinessCard.zpt">
+            <!-- Have a group that will only become visible when the target image comes into view-->
+            <a-entity visibility-changer>
+
+                <!-- REMEMBER - 3D OBJECTS TRACK FROM THE CENTER OF THE IMAGE -->
+                <!-- ANIMATED PLANE BACKGROUND -->
+                <a-image id="card-background" src="#card-plain" height="2" width="3" position="0 0 0" material="alpha-test:0.5"></a-image>
+                
+                <!-- NAME AND JOB TITLE -->
+                <a-entity id="name-and-title">
+                    <a-entity id="name" text="font: https://cdn.aframe.io/fonts/Aileron-Semibold.fnt; value: Francesca Ellis; color: #FFF;" position="0.3 0 0" scale="3.5 3.5 3.5"></a-entity>
+                    <a-entity id="title" text="font: https://cdn.aframe.io/fonts/Aileron-Semibold.fnt; value: Junior Support Engineer; color: #FFF;" position="-0.2 -0.15 0" scale="2.5 2.5 2.5"></a-entity>
+                </a-entity>
+                <!-- END NAME AND JOB TITLE -->
+
+                <!-- MENU ITEMS -->
+                <a-entity id="menu-items">
+                    <a-image src="#web-icon" class="collidable" position="-1.2 0.6 0.3" mixin="iconProperties" link="href: https://zap.works; title: My Homepage;" animation="delay: 1000;"></a-image>
+                    <a-image src="#facebook-icon" class="collidable" position="-0.7 0.6 0.3" mixin="iconProperties" link="href: https://zap.works; title: My Facebook;" animation="delay: 2000;"></a-image>
+                    <a-image src="#phone-icon" class="collidable" position="-0.2 0.6 0.3" mixin="iconProperties" link="href: tel:123-456-7890p123; title: My Phone;" animation="delay: 3000;"></a-image>
+                </a-entity>
+                <!-- END MENU ITEMS -->
+
+                <!-- ZAPPAR LOGO 3D MODEL (OVER BACKGROUND) SOUND EFFECTS OBTAINED FROM https://www.zapsplat.com - STANDARD LICENSE https://www.zapsplat.com/license-type/standard-license/ -->
+                <a-entity id="bolt" gltf-model="assets/ZapparLog.glb" class="collidable" position="0.6 0 0.3" scale="2 1.9 2" sound="src: url(assets/zapsplat_laser.mp3); on: click;"></a-entity>
+
+                <!-- CALL TO ACTION TEXT -->
+                <a-entity id="cta" text="font: https://cdn.aframe.io/fonts/Aileron-Semibold.fnt; value: Tap on an icon to \n find out more!; color: #FFF; align: center;" position="-0.7 -0.5 0.3" scale="3 3 3"></a-entity>
+                
+            </a-entity>
+            <!-- END VISIBILITY CHANGER -->
+        </a-entity>
+        <!-- END TRACKING EXPERIENCE -->
+    </a-scene> <!-- END SCENE -->
+
+</body>
+
+</html>

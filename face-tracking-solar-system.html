@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.3.6/zappar-aframe.js"></script>
+
+    <meta charset="utf-8" />
+    <title>Face tracking Solar System - Zappar for A-Frame</title>
+    <!-- INLINE STYLES -->
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- OPEN CANVAS/SCENE -->
+    <a-scene loading-screen="backgroundColor: #344b60">
+
+        <!-- Ask user for camera permissions, display some text if permission is denied -->
+        <a-entity zappar-permissions-ui id="permissions"></a-entity>
+        <!-- shows a full-page dialog that informs the user they're using an unsupported browser -->
+        <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
+
+        <!-- ASSET MANAGING SYSTEM -->
+        <a-assets>
+            <!-- ALL PLANET TEXTURES (PLANET TEXTURES FROM SHADERELIEF http://www.shadedrelief.com/natural3/index.html & SOLARSYSTEMSCOPE https://www.solarsystemscope.com/textures/)-->
+            <img id="venusTexture" src="assets/planets/Venus/Venus_Texture.jpg" />
+            <img id="earthTexture" src="assets/planets/Earth/Earth_Texture.jpg" />
+            <img id="marsTexture" src="assets/planets/Mars/Mars_Texture.jpg" />
+        </a-assets>
+        <!-- END ASSET MANAGING SYSTEM -->
+
+        <!-- MIXINS -->
+        <!-- ROTATE THE PLANETS -->
+        <a-mixin id="rotate" animation="property: rotation; loop: true; from: 0 0 0; to: 0 360 0; dur: 20000; easing: linear;"></a-mixin>
+        <!-- MAKE THE PLANETS ORBIT -->
+        <a-mixin id="orbit" animation="property: rotation; loop: true; to: 0 360 0; easing: linear;"></a-mixin>
+        <!-- END MIXINS -->
+
+        <!-- BACKGROUND MUSIS BY ZAPSPLAT; STANDARD LICENSE https://www.zapsplat.com/license-type/standard-license/ -->
+        <a-entity sound="src: url(assets/bgmusic.mp3); autoplay: true; loop: true"></a-entity>
+
+        <!-- CREATE AN A-FRAME CAMERA AND REPLACE IT WITH ZAPPAR'S -->
+        <a-camera zappar-camera="user-facing: true;"></a-camera>
+
+        <!-- CREATE FACE TRACKING TYPE -->
+        <a-entity zappar-face id="face-group">
+
+            <!-- AMBIENT LIGHTING -->
+            <a-entity light="type: ambient; color: #CCC"></a-entity>
+
+            <!-- HEAD MASK TO LIMIT 3D ELEMENTS -->
+            <a-entity zappar-head-mask="face: #face-group;" light="type: point; color: #ffaf46; intensity: 1.5"></a-entity>
+
+            <!-- PLANETS -->
+            <!-- VENUS -->
+            <a-entity id="venus" mixin="orbit" animation="dur: 10000;">
+                <a-sphere position="0 0.65 1.8" radius="0.2" material="src: #venusTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- EARTH -->
+            <a-entity id="earth" mixin="orbit" animation="dur: 12000;">
+                <a-sphere position="0 0.65 1.9" radius="0.2" material="src: #earthTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+            <!-- MARS -->
+            <a-entity id="mars" mixin="orbit" animation="dur: 14000;">
+                <a-sphere position="0 0.65 2" radius="0.1" material="src: #marsTexture;" mixin="rotate"></a-sphere>
+            </a-entity>
+
+        </a-entity>
+        <!-- END FACE TRACKING -->
+        
+    </a-scene>
+    <!-- END SCENE -->
+</body>
+
+</html>
