@@ -1,21 +1,15 @@
-# Zappar for A-Frame Examples
+### Examples for Zappar A-Frame
 
-This repository contains a set of examples for Zappar for A-Frame. For more information, check out the package page for [Zappar for A-Frame](https://www.npmjs.com/package/@zappar/zappar-aframe) (@zappar/zappar-aframe).
+Here is a list of repositories containing examples. For more information, check out the package page for Zappar for A-Frame [@zappar/zappar-aframe](https://www.npmjs.com/package/@zappar/zappar-aframe)
 
-## Prerequisites
 
-To get started you'll want to print out the example target images, `example-tracking-image.png` and `BusinessCard.png`.
-
-## Trying the Examples
-
-Due to browser restrictions surrounding use of the camera, you must use HTTPS to access the HTML files, even if doing so locally from your computer. You can use the [ZapWorks command-line tool](https://www.npmjs.com/package/@zappar/zapworks-cli) to serve a folder over HTTPS for access on your local computer, like this: 
-```
-zapworks serve .
-```
-
-The command also lets you serve the folder for access by other devices on your local network, like this:
-```
-zapworks serve . --lan
-```
-
-Once this is running, open the link that's output on the console and tap the different HTML files to try the examples. If you'd like to try on a mobile device, ensure it's on the same local network as your computer, then visit the appropriate link in the console output.
+| Example      | Repository |
+| ----------- | ----------- |
+| face-tracking-3d-model | https://github.com/zappar-xr/aframe-example-face-tracking-3d-model/ |
+| face-tracking-face-mesh | https://github.com/zappar-xr/aframe-example-face-tracking-face-mesh/ |
+| face-tracking-solar-system | https://github.com/zappar-xr/aframe-example-face-tracking-solar-system/ |
+| image-tracking-animation-from-gaze | https://github.com/zappar-xr/aframe-example-image-tracking-animation-from-gaze/ |
+| image-tracking-business-card | https://github.com/zappar-xr/aframe-example-image-tracking-business-card/ |
+| image-tracking-launch-url | https://github.com/zappar-xr/aframe-example-image-tracking-launch-url/ |
+| instant-tracking-3d-model | https://github.com/zappar-xr/aframe-example-instant-tracking-3d-model/ |
+| instant-tracking-solar-system | https://github.com/zappar-xr/aframe-example-instant-tracking-solar-system/ |
