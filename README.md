@@ -16,4 +16,5 @@ Here is a list of repositories containing examples. For more information, check 
 | instant-tracking-real-time-env-map | https://github.com/zappar-xr/aframe-example-instant-tracking-real-time-env-map/ |
 | instant-tracking-solar-system | https://github.com/zappar-xr/aframe-example-instant-tracking-solar-system/ |
 | instant-tracking-video | https://github.com/zappar-xr/aframe-example-instant-tracking-video/ |
+| instant-tracking-volumetric-video-arcturus | https://github.com/zappar-xr/aframe-example-instant-tracking-volumetric-video-arcturus/ |
 | instant-tracking-volumetric-video-sense-of-space | https://github.com/zappar-xr/aframe-example-instant-tracking-volumetric-video-sense-of-space/ |
